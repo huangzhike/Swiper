@@ -191,8 +191,14 @@
 		console.log("swipe");
 		console.log("this" + this.timer);
 		console.log(this.currIndex);
+		this.wrapper.style.msTransform = 'translate(' + w + 'px, 0)';
+		this.wrapper.style.webkitTransform = 'translate(' + w + 'px, 0)';
 		this.wrapper.style.transform = 'translate(' + w + 'px, 0)';
+
+		this.wrapper.style.webkitTransitionDuration = t + 's';
 		this.wrapper.style.transitionDuration = t + 's';
+
+		this.wrapper.style.webkitTransitionTimingFunction = this.config.transitionTiming || "linear"
 		this.wrapper.style.transitionTimingFunction = this.config.transitionTiming || "linear"
 	};
 	// 对外暴露变量
