@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Swiper</title>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+<body>
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide"><img src="imgs/1.jpg" alt=""></div>
+			<div class="swiper-slide"><img src="imgs/2.jpg" alt=""></div>
+			<div class="swiper-slide"><img src="imgs/3.jpg" alt=""></div>
+			<div class="swiper-slide"><img src="imgs/4.jpg" alt=""></div>
+			<div class="swiper-slide"><img src="imgs/5.jpg" alt=""></div>
+			<div class="swiper-slide"><img src="imgs/6.jpg" alt=""></div>
+		</div>
+		<div class="swiper-button-prev"></div>
+		<div class="swiper-button-next"></div>			
+	</div>
+
+	<script src="js/mySwiper.js"></script>  
+	<script>
+		window.onload = function() {
+			// 在DOM加载完成后，不然可能获取不到图片宽度，低级错误
+			new Swiper({
+				// 绑定的DOM对象
+				element: document.getElementsByClassName('swiper-container')[0],
+				time: .4,
+				transitionTiming: "linear",
+				intervalTime: 3000,
+				pagination: true,
+				button: true
+			});
+
+			var pagination = document.getElementsByClassName('swiper-pagination')[0];
+			pagination.style.marginLeft = -pagination.clientWidth / 2 + "px";
+			var container = document.getElementsByClassName('swiper-container')[0];
+			container.style.marginLeft = -container.clientWidth / 2 + "px";
+			container.style.marginTop = container.clientHeight / 2 + "px";
+		}
+	</script>
+</body>
+</html>

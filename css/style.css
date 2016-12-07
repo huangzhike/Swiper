@@ -1,0 +1,61 @@
+* {
+	margin: 0;
+	padding: 0
+}
+
+.swiper-container {
+	position: relative;
+	top: 50%;
+	left: 50%;
+	overflow: hidden;
+	width: 700px
+}
+
+.swiper-wrapper {
+	position: relative;
+	z-index: 2;
+	overflow: hidden;
+	width: 9000px
+}
+
+.swiper-wrapper div {
+	float: left
+}
+
+.swiper-pagination {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	z-index: 3
+}
+
+.swiper-pagination .bullet {
+	display: inline-block;
+	margin: 5px;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background: rgba(2,2,2,.4);
+	line-height: 30px
+}
+
+.swiper-pagination .bullet-on {
+	background: rgba(3,3,0,.8)
+}
+
+.swiper-button-prev {
+	left: 0
+}
+
+.swiper-button-next,.swiper-button-prev {
+	position: absolute;
+	top: 50%;
+	z-index: 3;
+	width: 30px;
+	height: 40px;
+	background: rgba(2,2,2,.4)
+}
+
+.swiper-button-next {
+	right: 0
+}
