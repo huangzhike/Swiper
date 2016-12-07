@@ -39,7 +39,7 @@ new Swiper({
 ```
 **注意：**
 * 按照下面模板设置，即DOM结构及类名：
-	```
+```
 <div class="swiper-container">
 	<div class="swiper-wrapper">
 		<div class="swiper-slide"><img src="imgs/1.jpg" alt=""></div>
