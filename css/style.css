@@ -19,7 +19,8 @@
 }
 
 .swiper-wrapper div {
-	float: left
+	float: left;
+    cursor: move;
 }
 
 .swiper-pagination {

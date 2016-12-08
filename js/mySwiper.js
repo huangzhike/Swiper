@@ -68,7 +68,7 @@
 		// flag
 		this.notAnimating = true;
 		// 回弹距离
-		this.band = Math.ceil(this.width * 0.3);
+		this.band = Math.ceil(this.width / 4);
 		// PC手机相应事件名
 		this.start = isMobile ? 'touchstart' : 'mousedown';
 		this.move = isMobile ? 'touchmove' : 'mousemove';
@@ -149,7 +149,7 @@
 				// 翻页
 				this.right > this.band && this.swipe(-this.width * ++this.currIndex, this.time);
 				console.log(this.currIndex + "1");
-				// 如果小于1/3宽度则回弹，不翻页
+				// 如果小于1/4宽度则回弹，不翻页
 				this.right < this.band && this.swipe(-this.width * this.currIndex, this.time);
 			}
 			console.log(this.right);
@@ -191,6 +191,7 @@
 		console.log("swipe");
 		console.log("this" + this.timer);
 		console.log(this.currIndex);
+		// this.wrapper.style.left = -this.width * this.currIndex+"px";
 		this.wrapper.style.msTransform = 'translate(' + w + 'px, 0)';
 		this.wrapper.style.webkitTransform = 'translate(' + w + 'px, 0)';
 		this.wrapper.style.transform = 'translate(' + w + 'px, 0)';
@@ -201,6 +202,6 @@
 		this.wrapper.style.webkitTransitionTimingFunction = this.config.transitionTiming || "linear"
 		this.wrapper.style.transitionTimingFunction = this.config.transitionTiming || "linear"
 	};
-	// 对外暴露变量
+	// 对外暴露Swiper
 	window.Swiper = Swiper;
 })();
