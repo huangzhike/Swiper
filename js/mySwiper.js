@@ -8,6 +8,8 @@
 			return false;
 		}
 	})();
+
+
 	var Swiper = function(configObject) {
 		// 保存this在回调中使用，后面经常经常经常用到，话说总是一不小心写错this。。。
 		var that = this;
@@ -18,6 +20,22 @@
 		this.wrapper = container.getElementsByClassName('swiper-wrapper')[0];
 		this.pages = container.getElementsByClassName('swiper-slide');
 		console.log("hh"+this.pages[0].clientWidth);
+
+		if (!isMobile) {
+			container.style.marginLeft = -container.clientWidth / 2 + "px";
+			container.style.marginTop = container.clientHeight / 2 + "px";
+
+		} else {
+			container.style.top = "0";
+			container.style.left = "0";
+			container.style.width = "100%";
+			var wW = document.body.clientWidth;
+			for (var i = 0; i < this.pages.length; i++) {
+				this.pages[i].style.width = wW + "px";
+			}
+		}
+
+
 		// 每页宽度
 		this.width = this.pages[0].clientWidth;
 		// 轮播页面数量
@@ -36,17 +54,22 @@
 			var bullet = container.getElementsByClassName('bullet');
 			bullet[0].classList.add('bullet-on');
 			this.bullet = container.getElementsByClassName('bullet');
-			// 分页添加点击事件处理函数
-			for (var i = 0; i < this.pagesLen; i++) {
-				this.bullet[i].index = i;
-				this.bullet[i].onclick = function() {
-					that.currIndex = this.index;
-					that.swipe(-that.width * that.currIndex, that.time);
+			// 移动端不需要
+			if (!isMobile) {
+				// 分页添加点击事件处理函数
+				for (var i = 0; i < this.pagesLen; i++) {
+					this.bullet[i].index = i;
+					this.bullet[i].onclick = function() {
+						that.currIndex = this.index;
+						that.swipe(-that.width * that.currIndex, that.time);
+					}
 				}
 			}
+			pagination.style.marginLeft = -pagination.clientWidth / 2 + "px";
 		}
 		// 如果有上下页按钮
 		if (this.config.button) {
+			// 移动端不需要
 			if (!isMobile) {
 				var prev = container.getElementsByClassName('swiper-button-prev')[0];
 				var next = container.getElementsByClassName('swiper-button-next')[0];
@@ -61,6 +84,7 @@
 				}, false);
 			}
 		}
+
 		// 动画过度时间
 		this.time = this.config.time || .3;
 		// 当前页码
@@ -111,6 +135,7 @@
 	};
 	// 点击或触摸开始
 	Swiper.prototype.dragStart = function(e) {
+		this.touch = false;
 		this.notAnimating = false;
 		// 先清除定时器
 		if (this.timer) clearInterval(this.timer);
@@ -122,6 +147,8 @@
 	};
 	// 拖动
 	Swiper.prototype.dragMove = function(e) {
+		// 移动端区别点击与拖动
+		this.touch = true;
 		if (this.notAnimating) return;
 		e = e || event;
 		this.endX = e.clientX ? e.clientX : e.touches[0].clientX;
@@ -138,41 +165,45 @@
 	};
 	// 鼠标放开或触摸结束
 	Swiper.prototype.dragEnd = function(e) {
-		var that = this;
-		if (this.notAnimating) return;
-		console.log("end");
-		// PC端的mouseup事件
-		if (this.end == 'mouseup') {
-			this.right = this.startX - e.clientX;
-			if (this.right > 0 && this.currIndex < this.pagesLen - 1) {
-				console.log(this.currIndex + "1");
-				// 翻页
-				this.right > this.band && this.swipe(-this.width * ++this.currIndex, this.time);
-				console.log(this.currIndex + "1");
-				// 如果小于1/4宽度则回弹，不翻页
-				this.right < this.band && this.swipe(-this.width * this.currIndex, this.time);
-			}
-			console.log(this.right);
-			console.log(this.currIndex > 0);
-			if (this.right < 0 && this.currIndex > 0) {
-				console.log("here");
-				 if (-this.right > this.band) {
-				 	// 翻页
-					this.swipe(-this.width * --this.currIndex, this.time);
-				} else {
-					// 如果小于1/3宽度则回弹，不翻页
-					this.swipe(-this.width * this.currIndex, this.time);
+		if (this.touch) {
+			var that = this;
+			if (this.notAnimating) return;
+			console.log("end");
+			// PC端的mouseup事件
+			if (this.end == 'mouseup') {
+				this.right = this.startX - e.clientX;
+				if (this.right > 0 && this.currIndex < this.pagesLen - 1) {
+					console.log(this.currIndex + "1");
+					// 翻页
+					this.right > this.band && this.swipe(-this.width * ++this.currIndex, this.time);
+					console.log(this.currIndex + "1");
+					// 如果小于1/4宽度则回弹，不翻页
+					this.right < this.band && this.swipe(-this.width * this.currIndex, this.time);
 				}
+				console.log(this.right);
+				console.log(this.currIndex > 0);
+				if (this.right < 0 && this.currIndex > 0) {
+					console.log("here");
+					 if (-this.right > this.band) {
+					 	// 翻页
+						this.swipe(-this.width * --this.currIndex, this.time);
+					} else {
+						// 如果小于1/3宽度则回弹，不翻页
+						this.swipe(-this.width * this.currIndex, this.time);
+					}
+				}
+			} else {
+				// 手机端的touchend事件，其实可以合并PC，但我想实现不一样的效果
+				this.endX < this.startX && this.currIndex < this.pagesLen - 1 && this.currIndex++;
+				this.endX > this.startX && this.currIndex > 0 && this.currIndex--;
+				this.swipe(-this.width * this.currIndex, this.time);
 			}
-		} else {
-			// 手机端的touchend事件，其实可以合并PC，但我想实现不一样的效果
-			this.endX < this.startX && this.currIndex < this.pagesLen - 1 && this.currIndex++;
-			this.endX > this.startX && this.currIndex > 0 && this.currIndex--;
-			this.swipe(-this.width * this.currIndex, this.time);
 		}
 		if (this.timer) clearInterval(this.timer); 
-			this.interval();
+		console.log("t");
 		this.notAnimating = true;
+		this.interval();
+		
 	};
 	// 分页
 	Swiper.prototype.paging = function() {

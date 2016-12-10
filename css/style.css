@@ -3,6 +3,14 @@
 	padding: 0
 }
 
+img {
+	width:100%;
+}
+
+body {
+	background-color: #333;
+}
+
 .swiper-container {
 	position: relative;
 	top: 50%;
@@ -20,7 +28,7 @@
 
 .swiper-wrapper div {
 	float: left;
-    cursor: move;
+	cursor: move;
 }
 
 .swiper-pagination {
@@ -33,11 +41,12 @@
 .swiper-pagination .bullet {
 	display: inline-block;
 	margin: 5px;
-	width: 30px;
-	height: 30px;
+	width: 20px;
+	height: 20px;
 	border-radius: 50%;
 	background: rgba(2,2,2,.4);
-	line-height: 30px
+	line-height: 30px;
+	cursor: pointer;
 }
 
 .swiper-pagination .bullet-on {
@@ -50,7 +59,7 @@
 
 .swiper-button-next,.swiper-button-prev {
 	position: absolute;
-	top: 50%;
+	top: 45%;
 	z-index: 3;
 	width: 30px;
 	height: 40px;
