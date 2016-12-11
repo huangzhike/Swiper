@@ -1,14 +1,14 @@
  (function() {
  	// 辨别手机还是PC
-	var isMobile = (function() {
-		try {
-			document.createEvent("TouchEvent");
-			return true;
-		} catch (e) {
-			return false;
-		}
-	})();
-
+	// var isMobile = (function() {
+	// 	try {
+	// 		document.createEvent("TouchEvent");
+	// 		return true;
+	// 	} catch (e) {
+	// 		return false;
+	// 	}
+	// })();
+	var isMobile = 'ontouchstart' in window ? true : false;
 
 	var Swiper = function(configObject) {
 		// 保存this在回调中使用，后面经常经常经常用到，话说总是一不小心写错this。。。
@@ -34,7 +34,6 @@
 				this.pages[i].style.width = wW + "px";
 			}
 		}
-
 
 		// 每页宽度
 		this.width = this.pages[0].clientWidth;

@@ -4,7 +4,7 @@
 
 ![](imgs/code.png)
 
-**仿jQuerySwiper插件，可在PC及移动端使用，目前实现功能：**
+**Swiper插件，可在PC及移动端使用，目前实现功能：**
 * 图片轮播；
 * 鼠标悬停或拖动翻页时轮播暂停；
 * PC端鼠标拖动翻页，手机端滑动翻页；
@@ -21,8 +21,8 @@
 
 **缺点：**
 * 可能有bug，写得比较赶，如果发现bug欢迎随时指正；
-* 因为时间比较赶，代码也比较挫，this满篇跑，主要考虑到了创建两个Swiper的情况；
-* 不兼容低版本IE，如addEventListener，getElementsByClassName等等，因为不想兼容，也没必要兼容；
+* 因为时间比较赶，代码也比较挫，满篇this，主要考虑到了创建两个Swiper的情况；
+* 不兼容低版本IE，如addEventListener，getElementsByClassName等等，不想兼容，也没必要兼容；
 
 **使用方法：**
 * 引入js文件后 `new Swiper` 调用：
