@@ -1,4 +1,4 @@
-# mySwiper
+# swiper
 
 **移动端观看**
 
