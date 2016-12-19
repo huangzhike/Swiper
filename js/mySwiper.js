@@ -53,25 +53,25 @@
 			var bullet = container.getElementsByClassName('bullet');
 			bullet[0].classList.add('bullet-on');
 			this.bullet = container.getElementsByClassName('bullet');
-			// 移动端不需要
-			if (!isMobile) {
-				// 分页添加点击事件处理函数
-				for (var i = 0; i < this.pagesLen; i++) {
-					this.bullet[i].index = i;
-					this.bullet[i].onclick = function() {
-						that.currIndex = this.index;
-						that.swipe(-that.width * that.currIndex, that.time);
-					}
+
+			// 分页添加点击事件处理函数
+			for (var i = 0; i < this.pagesLen; i++) {
+				this.bullet[i].index = i;
+				this.bullet[i].onclick = function() {
+					that.currIndex = this.index;
+					that.swipe(-that.width * that.currIndex, that.time);
 				}
 			}
+			
 			pagination.style.marginLeft = -pagination.clientWidth / 2 + "px";
 		}
 		// 如果有上下页按钮
 		if (this.config.button) {
+			var prev = container.getElementsByClassName('swiper-button-prev')[0];
+			var next = container.getElementsByClassName('swiper-button-next')[0];
 			// 移动端不需要
 			if (!isMobile) {
-				var prev = container.getElementsByClassName('swiper-button-prev')[0];
-				var next = container.getElementsByClassName('swiper-button-next')[0];
+
 				// 添加相应点击事件处理
 				prev.addEventListener("click", function() {
 					if (that.currIndex == 0) return;
@@ -81,6 +81,9 @@
 					if (that.currIndex == that.pagesLen - 1) return;
 					that.swipe(-that.width * ++that.currIndex, that.time);
 				}, false);
+			} else {
+				prev.style.display = "none";
+				next.style.display = "none";
 			}
 		}
 
@@ -107,7 +110,10 @@
 			that.dragEnd(e);
 		}, false);
 		container.addEventListener("mouseover", function() {
+			console.log("clean");
 			clearInterval(that.timer);
+			// 修复移动端点击后不再轮播bug
+			isMobile ? that.interval() : "";
 		}, false);
 		container.addEventListener("mouseleave", function() {
 			if (that.timer) clearInterval(that.timer);
@@ -200,8 +206,10 @@
 		}
 		if (this.timer) clearInterval(this.timer); 
 		console.log("t");
-		this.notAnimating = true;
+
 		this.interval();
+		this.notAnimating = true;
+		console.log("go");
 		
 	};
 	// 分页
