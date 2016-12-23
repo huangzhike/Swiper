@@ -1,13 +1,6 @@
  (function() {
+
  	// 辨别手机还是PC
-	// var isMobile = (function() {
-	// 	try {
-	// 		document.createEvent("TouchEvent");
-	// 		return true;
-	// 	} catch (e) {
-	// 		return false;
-	// 	}
-	// })();
 	var isMobile = 'ontouchstart' in window ? true : false;
 
 	var Swiper = function(configObject) {
@@ -19,13 +12,13 @@
 		var container = this.config.element;
 		this.wrapper = container.getElementsByClassName('swiper-wrapper')[0];
 		this.pages = container.getElementsByClassName('swiper-slide');
-		console.log("hh"+this.pages[0].clientWidth);
 
 		if (!isMobile) {
 			container.style.marginLeft = -container.clientWidth / 2 + "px";
 			container.style.marginTop = container.clientHeight / 2 + "px";
 
 		} else {
+			// 移动端图片充满屏幕宽度
 			container.style.top = "0";
 			container.style.left = "0";
 			container.style.width = "100%";
@@ -63,15 +56,14 @@
 				}
 			}
 			
-			pagination.style.marginLeft = -pagination.clientWidth / 2 + "px";
+			pagination.style.marginLeft = - pagination.clientWidth / 2 + "px";
 		}
 		// 如果有上下页按钮
 		if (this.config.button) {
 			var prev = container.getElementsByClassName('swiper-button-prev')[0];
 			var next = container.getElementsByClassName('swiper-button-next')[0];
-			// 移动端不需要
+			
 			if (!isMobile) {
-
 				// 添加相应点击事件处理
 				prev.addEventListener("click", function() {
 					if (that.currIndex == 0) return;
@@ -81,7 +73,9 @@
 					if (that.currIndex == that.pagesLen - 1) return;
 					that.swipe(-that.width * ++that.currIndex, that.time);
 				}, false);
+
 			} else {
+				// 移动端不需要
 				prev.style.display = "none";
 				next.style.display = "none";
 			}
@@ -99,7 +93,7 @@
 		this.start = isMobile ? 'touchstart' : 'mousedown';
 		this.move = isMobile ? 'touchmove' : 'mousemove';
 		this.end = isMobile ? 'touchend' : 'mouseup';
-		// 一大堆监听
+		// 一大堆监听，或者用bind改变this
 		this.wrapper.addEventListener(this.start, function(e) {
 			that.dragStart(e);
 		}, false);
@@ -110,7 +104,6 @@
 			that.dragEnd(e);
 		}, false);
 		container.addEventListener("mouseover", function() {
-			console.log("clean");
 			clearInterval(that.timer);
 			// 修复移动端点击后不再轮播bug
 			isMobile ? that.interval() : "";
@@ -173,22 +166,18 @@
 		if (this.touch) {
 			var that = this;
 			if (this.notAnimating) return;
-			console.log("end");
 			// PC端的mouseup事件
 			if (this.end == 'mouseup') {
 				this.right = this.startX - e.clientX;
 				if (this.right > 0 && this.currIndex < this.pagesLen - 1) {
-					console.log(this.currIndex + "1");
 					// 翻页
 					this.right > this.band && this.swipe(-this.width * ++this.currIndex, this.time);
-					console.log(this.currIndex + "1");
 					// 如果小于1/4宽度则回弹，不翻页
 					this.right < this.band && this.swipe(-this.width * this.currIndex, this.time);
 				}
-				console.log(this.right);
-				console.log(this.currIndex > 0);
+
 				if (this.right < 0 && this.currIndex > 0) {
-					console.log("here");
+
 					 if (-this.right > this.band) {
 					 	// 翻页
 						this.swipe(-this.width * --this.currIndex, this.time);
@@ -197,19 +186,18 @@
 						this.swipe(-this.width * this.currIndex, this.time);
 					}
 				}
+
 			} else {
-				// 手机端的touchend事件，其实可以合并PC，但我想实现不一样的效果
+				// 手机端的touchend事件，最初的写法，没有回弹，没有合并PC的写法
 				this.endX < this.startX && this.currIndex < this.pagesLen - 1 && this.currIndex++;
 				this.endX > this.startX && this.currIndex > 0 && this.currIndex--;
 				this.swipe(-this.width * this.currIndex, this.time);
 			}
 		}
 		if (this.timer) clearInterval(this.timer); 
-		console.log("t");
 
 		this.interval();
 		this.notAnimating = true;
-		console.log("go");
 		
 	};
 	// 分页
@@ -219,16 +207,11 @@
 		for (var i = 0; i < this.pagesLen; i++) {
 			this.bullet[i].classList.remove('bullet-on');
 		}
-		console.log(this.currIndex);
 		this.bullet[this.currIndex].classList.add('bullet-on');
 	};
 	// 页面swipe
 	Swiper.prototype.swipe = function(w, t) {
 		// 更新分页图标
-		this.paging();
-		console.log("swipe");
-		console.log("this" + this.timer);
-		console.log(this.currIndex);
 		// this.wrapper.style.left = -this.width * this.currIndex+"px";
 		this.wrapper.style.msTransform = 'translate(' + w + 'px, 0)';
 		this.wrapper.style.webkitTransform = 'translate(' + w + 'px, 0)';
