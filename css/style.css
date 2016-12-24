@@ -63,7 +63,8 @@ body {
 	z-index: 3;
 	width: 30px;
 	height: 40px;
-	background: rgba(2,2,2,.4)
+	background: rgba(2,2,2,.4);
+	cursor: pointer;
 }
 
 .swiper-button-next {
