@@ -165,10 +165,11 @@
  	// 拖动
  	Swiper.prototype.dragMove = function(e) {
  		// 移动端区别点击与拖动
- 		this.touch = true;
+ 		this.touched = true;
  		if (this.notAnimating) return;
  		e = e || event;
  		this.endX = e.clientX ? e.clientX : e.touches[0].clientX;
+
  		if (this.currIndex == this.pagesLen - 1 || this.currIndex == 0) {
  			// 如果是第一页或最后一页则给个回弹，因为是即时随手的，过度时间为0
  			this.swipe(-this.width * this.currIndex + (this.endX - this.startX) / 7, "0");
@@ -183,32 +184,22 @@
  	};
  	// 鼠标放开或触摸结束
  	Swiper.prototype.dragEnd = function(e) {
- 		if (this.touch) {
+ 		if (this.touched) {
 
  			if (this.notAnimating) return;
- 			// PC端的mouseup事件
- 			if (this.end == 'mouseup') {
 
- 				this.right = this.startX - e.clientX;
- 				if (this.right > 0 && this.currIndex < this.pagesLen - 1) {
- 					// 翻页
- 					this.right > this.band && this.swipe(-this.width * ++this.currIndex);
- 					// 如果小于1/4宽度则回弹，不翻页
- 					this.right < this.band && this.swipe(-this.width * this.currIndex);
+			// 判断左右
+			this.right = this.startX - this.endX;
+			// 翻下页
+			this.right > 0 && this.currIndex < this.pagesLen - 1&& this.right > this.band && this.currIndex++;
+			// 如果小于1/4宽度则回弹，不翻页
+			this.right > 0 && this.currIndex < this.pagesLen - 1&& this.right < this.band;
+			// 翻上页
+			this.right < 0 && this.currIndex > 0 && -this.right > this.band && this.currIndex--;
+			// 如果小于1/4宽度则回弹，不翻页
+			this.right < 0 && this.currIndex > 0 && -this.right < this.band;
 
- 				} else if (this.right < 0 && this.currIndex > 0) {
- 					// 翻页
- 					- this.right > this.band && this.swipe(-this.width * --this.currIndex);
- 					// 如果小于1/3宽度则回弹，不翻页
- 					- this.right < this.band && this.swipe(-this.width * this.currIndex);
- 				}
-
- 			} else {
- 				// 手机端的touchend事件，最初的写法，最简洁，但没有小于距离的回弹效果，当然也可以合并PC写法
- 				this.endX < this.startX && this.currIndex < this.pagesLen - 1 && this.currIndex++;
- 				this.endX > this.startX && this.currIndex > 0 && this.currIndex--;
- 				this.swipe(-this.width * this.currIndex);
- 			}
+			this.swipe(-this.width * this.currIndex);			
  		}
 
  		if (this.timer) clearInterval(this.timer);

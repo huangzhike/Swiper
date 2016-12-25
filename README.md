@@ -27,8 +27,8 @@
 
 **缺点：**
 * 可能有bug，欢迎随时指正；
-* 因为时间比较赶，代码也比较挫；
 * 不兼容低版本IE，如addEventListener，getElementsByClassName等等；
+* 其它请看Js；
 
 **使用方法：**
 * 引入js文件后 `new Swiper` 调用：
@@ -70,6 +70,3 @@ new Swiper({
 	<div class="swiper-button-next"></div>			
 </div>
 ```
-* 在移动端取消了上下页按钮，因为没什么用；
-* 移动端与PC端分页有所不同，具体看Js；
-* 其它请看Js；
