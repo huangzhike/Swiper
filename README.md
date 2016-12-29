@@ -35,7 +35,7 @@
 ```
 new Swiper({
 	// 绑定的DOM对象，必选
-	element: document.getElementsByClassName('swiper-container')[0],
+	element: document.getElementsByClassName("swiper-container")[0],
 	// 设置翻页动画过度时间，可选
 	time: .4,
 	// 设置翻页动画，可选

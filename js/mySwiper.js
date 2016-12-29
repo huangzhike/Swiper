@@ -1,7 +1,7 @@
  (function() {
 
  	// 辨别手机还是PC
- 	var isMobile = 'ontouchstart' in window ? true : false;
+ 	var isMobile = "ontouchstart" in window ? true : false;
 
  	var Swiper = function(configObject) {
 
@@ -9,10 +9,10 @@
  			this.config = configObject;
  			// 绑定的DOM对象
  			this.container = this.config.element;
- 			this.wrapper = this.container.getElementsByClassName('swiper-wrapper')[0];
+ 			this.wrapper = this.container.getElementsByClassName("swiper-wrapper")[0];
  			this.wrapper.style.webkitTransitionTimingFunction = this.config.transitionTiming || "linear";
  			this.wrapper.style.transitionTimingFunction = this.config.transitionTiming || "linear";
- 			this.pages = this.container.getElementsByClassName('swiper-slide');
+ 			this.pages = this.container.getElementsByClassName("swiper-slide");
  			// 轮播页面数量
  			this.pagesLen = this.pages.length;
  			// 动画过度时间
@@ -22,9 +22,9 @@
  			// flag
  			this.notAnimating = true;
  			// PC手机相应事件名
- 			this.start = isMobile ? 'touchstart' : 'mousedown';
- 			this.move = isMobile ? 'touchmove' : 'mousemove';
- 			this.end = isMobile ? 'touchend' : 'mouseup';
+ 			this.start = isMobile ? "touchstart" : "mousedown";
+ 			this.move = isMobile ? "touchmove" : "mousemove";
+ 			this.end = isMobile ? "touchend" : "mouseup";
  			// 初始化
  			this.init();
  			// 开始轮播
@@ -70,10 +70,10 @@
  				pagination.appendChild(bullet);
  			}
  			this.container.appendChild(pagination);
- 			var bullet = this.container.getElementsByClassName('bullet');
+ 			var bullet = this.container.getElementsByClassName("bullet");
 
- 			bullet[0].classList.add('bullet-on');
- 			this.bullet = this.container.getElementsByClassName('bullet');
+ 			bullet[0].classList.add("bullet-on");
+ 			this.bullet = this.container.getElementsByClassName("bullet");
 
  			// 分页添加点击事件处理函数
  			for (var i = 0; i < this.pagesLen; i++) {
@@ -89,8 +89,8 @@
 
  		// 如果有上下页按钮
  		if (this.config.button) {
- 			var prev = this.container.getElementsByClassName('swiper-button-prev')[0];
- 			var next = this.container.getElementsByClassName('swiper-button-next')[0];
+ 			var prev = this.container.getElementsByClassName("swiper-button-prev")[0];
+ 			var next = this.container.getElementsByClassName("swiper-button-next")[0];
 
  			if (!isMobile) {
  				// 添加相应点击事件处理
@@ -212,21 +212,21 @@
  		// 如果没有设置分页直接返回
  		if (!this.config.pagination) return;
  		for (var i = 0; i < this.pagesLen; i++) {
- 			this.bullet[i].classList.remove('bullet-on');
+ 			this.bullet[i].classList.remove("bullet-on");
  		}
- 		this.bullet[this.currIndex].classList.add('bullet-on');
+ 		this.bullet[this.currIndex].classList.add("bullet-on");
  	};
  	// 页面swipe
  	Swiper.prototype.swipe = function(w, t) {
  		// 更新分页图标
  		this.paging();
  		// this.wrapper.style.left = -this.width * this.currIndex+"px";
- 		this.wrapper.style.msTransform = 'translate(' + w + 'px, 0)';
- 		this.wrapper.style.webkitTransform = 'translate(' + w + 'px, 0)';
- 		this.wrapper.style.transform = 'translate(' + w + 'px, 0)';
+ 		this.wrapper.style.msTransform = "translate(" + w + "px, 0)";
+ 		this.wrapper.style.webkitTransform = "translate(" + w + "px, 0)";
+ 		this.wrapper.style.transform = "translate(" + w + "px, 0)";
 
- 		this.wrapper.style.webkitTransitionDuration = (t || this.time) + 's';
- 		this.wrapper.style.transitionDuration = (t || this.time) + 's';
+ 		this.wrapper.style.webkitTransitionDuration = (t || this.time) + "s";
+ 		this.wrapper.style.transitionDuration = (t || this.time) + "s";
  	};
  	// 对外暴露Swiper
  	window.Swiper = Swiper;
