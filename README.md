@@ -17,9 +17,12 @@
 * 其它；
 
 **待添加：**
-* 移动到最后一页无缝返回第一页；
-* 另外一种轮播效果，如方格淡入，透明度淡入；
-* 另外一种轮播方式；
+* 无限轮播，一些思路：
+	* 方法一：使用append的方法，不好；
+	* 方法二：轮播item为absolute，再z-index覆盖，active的z-index:2，normal为1，每次translate一个图片的width？这个效果不好；
+	* 方法三：轮播item为absolute，只有3个class，translateX:-100%（previous），translateX:0（now），translateX:100%（next），当前显示为now，后面都是next，通过index操作，最后一张为now时，其它全部放next。
+
+* 轮播效果，如方格淡入，透明度淡入；
 
 **优点：**
 * 轻量；
