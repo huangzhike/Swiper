@@ -191,9 +191,9 @@
 			// 判断左右
 			this.right = this.startX - this.endX;
 			// 翻下页
-			this.right > 0 && this.currIndex < this.pagesLen - 1&& this.right > this.band && this.currIndex++;
+			this.right > 0 && this.currIndex < this.pagesLen - 1 && this.right > this.band && this.currIndex++;
 			// 如果小于1/4宽度则回弹，不翻页
-			this.right > 0 && this.currIndex < this.pagesLen - 1&& this.right < this.band;
+			this.right > 0 && this.currIndex < this.pagesLen - 1 && this.right < this.band;
 			// 翻上页
 			this.right < 0 && this.currIndex > 0 && -this.right > this.band && this.currIndex--;
 			// 如果小于1/4宽度则回弹，不翻页
